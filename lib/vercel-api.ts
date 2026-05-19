@@ -137,6 +137,16 @@ export async function findProjectByDomain(
       }
     }
 
+    // STRATEGY 3.5: Fuzzy check if the domain contains the project name (e.g. preview deployment URL)
+    for (const project of projects) {
+      const cleanProjectName = project.name.toLowerCase().replace(/[^a-z0-9]/g, '')
+      const cleanDomain = normalizedDomain.split('.')[0].replace(/[^a-z0-9]/g, '')
+      if (cleanDomain.includes(cleanProjectName) || cleanProjectName.includes(cleanDomain)) {
+        console.log(`[findProjectByDomain] MATCH by fuzzy name match! Project: ${project.name}`)
+        return { success: true, data: project }
+      }
+    }
+
     // STRATEGY 4: For each project, fetch its domains explicitly
     console.log('[findProjectByDomain] Checking project domains explicitly...')
     for (const project of projects) {
