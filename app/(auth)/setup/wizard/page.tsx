@@ -273,7 +273,7 @@ function WizardContent() {
       switch (step) {
         case 2: // Supabase
           type = 'database'
-          credentials = { url: data.supabaseUrl, key: data.supabaseAnonKey }
+          credentials = { url: data.supabaseUrl, key: data.supabaseServiceKey }
           break
         case 3: // Redis + QStash
           type = 'redis'
